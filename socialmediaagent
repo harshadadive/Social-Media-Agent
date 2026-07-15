@@ -1,0 +1,392 @@
+
+
+
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>Social Spark — AI Social Media Assistant</title>
+<style>
+  :root {
+    --purple:  #a259ff;
+    --pink:    #ff6b9d;
+    --blue:    #4fc3f7;
+    --yellow:  #ffd166;
+    --green:   #06d6a0;
+    --cream:   #fdf6ff;
+    --white:   #ffffff;
+    --text:    #2d1b4e;
+    --muted:   #8b7aa8;
+    --border:  #ead9f7;
+  }
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+  html { scroll-behavior: smooth; }
+  body {
+    font-family: -apple-system, "Segoe UI", system-ui, sans-serif;
+    background: var(--cream);
+    color: var(--text);
+    font-size: 15px;
+    line-height: 1.6;
+  }
+
+  /* HEADER */
+  header {
+    position: sticky; top: 0; z-index: 90;
+    background: linear-gradient(100deg, #a259ff 0%, #c471ed 50%, #ff6b9d 100%);
+    box-shadow: 0 4px 20px rgba(162,89,255,.3);
+  }
+  .hdr {
+    max-width: 1100px; margin: 0 auto;
+    display: flex; align-items: center; justify-content: space-between;
+    padding: 13px 28px;
+  }
+  .brand { display: flex; align-items: center; gap: 11px; }
+  .brand-icon {
+    width: 44px; height: 44px; border-radius: 50%;
+    background: #fff; display: flex; align-items: center; justify-content: center;
+    font-size: 22px; box-shadow: 0 2px 10px rgba(0,0,0,.15);
+  }
+  .brand-text h1 { font-size: 19px; font-weight: 800; color: #fff; line-height: 1.1; }
+  .brand-text p  { font-size: 11px; color: rgba(255,255,255,.85); font-weight: 600; }
+  nav { display: flex; gap: 6px; }
+  nav a {
+    color: #fff; text-decoration: none; font-size: 13px; font-weight: 700;
+    padding: 6px 15px; border-radius: 30px;
+    background: rgba(255,255,255,.2); transition: background .18s;
+  }
+  nav a:hover { background: rgba(255,255,255,.38); }
+
+  /* HERO */
+  .hero {
+    text-align: center;
+    padding: 72px 24px 60px;
+    background: radial-gradient(ellipse at 50% 0%, rgba(162,89,255,.12) 0%, transparent 65%);
+  }
+  .hero-pill {
+    display: inline-flex; align-items: center; gap: 6px;
+    background: linear-gradient(135deg, #a259ff, #ff6b9d);
+    color: #fff; font-size: 11px; font-weight: 800;
+    letter-spacing: 1px; text-transform: uppercase;
+    padding: 5px 16px; border-radius: 30px; margin-bottom: 22px;
+  }
+  .hero h2 { font-size: 44px; font-weight: 900; line-height: 1.12; margin-bottom: 16px; }
+  .hero h2 em { font-style: normal; color: var(--purple); }
+  .hero-sub { font-size: 16px; color: var(--muted); font-weight: 600; max-width: 500px; margin: 0 auto 40px; }
+
+  .platform-row { display: flex; justify-content: center; gap: 10px; flex-wrap: wrap; margin-bottom: 44px; }
+  .plat {
+    display: flex; align-items: center; gap: 7px;
+    background: #fff; border: 2px solid var(--border);
+    border-radius: 50px; padding: 8px 16px;
+    font-size: 13px; font-weight: 700; color: var(--text);
+    box-shadow: 0 3px 10px rgba(162,89,255,.08);
+  }
+  .plat-ig { border-color: #f09433; }
+  .plat-tw { border-color: #1da1f2; }
+  .plat-fb { border-color: #1877f2; }
+  .plat-yt { border-color: #ff0000; }
+  .plat-tk { border-color: #555; }
+  .plat-li { border-color: #0077b5; }
+
+  .stat-row {
+    display: flex; justify-content: center; gap: 12px;
+    flex-wrap: wrap; max-width: 760px; margin: 0 auto 56px; padding: 0 20px;
+  }
+  .stat-pill {
+    display: flex; align-items: center; gap: 8px;
+    background: #fff; border: 2px solid var(--border);
+    border-radius: 50px; padding: 8px 20px;
+    box-shadow: 0 3px 10px rgba(162,89,255,.08);
+  }
+  .stat-pill strong { font-size: 18px; font-weight: 900; color: var(--purple); }
+  .stat-pill span   { font-size: 11.5px; font-weight: 700; color: var(--muted); text-transform: uppercase; letter-spacing: .4px; }
+
+  /* SECTION */
+  .section { max-width: 1100px; margin: 0 auto 64px; padding: 0 24px; }
+  .sec-head { text-align: center; margin-bottom: 32px; }
+  .sec-head h3 { font-size: 26px; font-weight: 900; }
+  .sec-head h3 span { color: var(--purple); }
+  .sec-line { width: 52px; height: 4px; background: linear-gradient(90deg,#a259ff,#ff6b9d); border-radius: 4px; margin: 8px auto 0; }
+
+  /* TOPIC CARDS */
+  .topic-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(270px,1fr)); gap: 20px; }
+  .topic-card {
+    background: #fff; border-radius: 20px; border: 2px solid var(--border);
+    box-shadow: 0 6px 22px rgba(162,89,255,.09);
+    padding: 24px 22px;
+    transition: transform .2s, box-shadow .2s, border-color .2s;
+    position: relative; overflow: hidden;
+  }
+  .topic-card::before { content: ""; position: absolute; top: 0; left: 0; right: 0; height: 4px; }
+  .tc1::before { background: linear-gradient(90deg,#a259ff,#ff6b9d); }
+  .tc2::before { background: linear-gradient(90deg,#4fc3f7,#06d6a0); }
+  .tc3::before { background: linear-gradient(90deg,#ffd166,#ff6b9d); }
+  .tc4::before { background: linear-gradient(90deg,#06d6a0,#4fc3f7); }
+  .tc5::before { background: linear-gradient(90deg,#ff6b9d,#ffd166); }
+  .tc6::before { background: linear-gradient(90deg,#a259ff,#4fc3f7); }
+  .topic-card:hover { transform: translateY(-5px); box-shadow: 0 16px 38px rgba(162,89,255,.18); border-color: var(--purple); }
+  .topic-ico { font-size: 34px; margin-bottom: 12px; }
+  .topic-card h4 { font-size: 16px; font-weight: 800; margin-bottom: 7px; }
+  .topic-card p  { font-size: 13px; color: var(--muted); font-weight: 600; line-height: 1.55; margin-bottom: 14px; }
+  .topic-tags { display: flex; gap: 6px; flex-wrap: wrap; }
+  .ttag { font-size: 11px; font-weight: 700; padding: 3px 10px; border-radius: 20px; background: #f3eaff; color: var(--purple); }
+
+  /* HOW IT WORKS */
+  .steps-row { display: grid; grid-template-columns: repeat(auto-fill, minmax(210px,1fr)); gap: 20px; }
+  .step-card {
+    background: #fff; border: 2px solid var(--border); border-radius: 20px;
+    padding: 26px 20px; text-align: center;
+    box-shadow: 0 4px 14px rgba(162,89,255,.08);
+  }
+  .step-num {
+    width: 40px; height: 40px; border-radius: 50%;
+    background: linear-gradient(135deg, #a259ff, #ff6b9d); color: #fff;
+    font-size: 16px; font-weight: 900;
+    display: flex; align-items: center; justify-content: center;
+    margin: 0 auto 12px;
+  }
+  .step-ico { font-size: 30px; margin-bottom: 10px; }
+  .step-card h4 { font-size: 15px; font-weight: 800; margin-bottom: 7px; }
+  .step-card p  { font-size: 13px; color: var(--muted); font-weight: 600; line-height: 1.5; }
+
+  /* FAQ */
+  .faq-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(320px,1fr)); gap: 18px; }
+  .faq-card {
+    background: #fff; border: 2px solid var(--border); border-radius: 18px;
+    padding: 20px 22px; box-shadow: 0 4px 16px rgba(162,89,255,.08);
+    transition: border-color .18s;
+  }
+  .faq-card:hover { border-color: var(--purple); }
+  .faq-q { font-size: 14px; font-weight: 800; margin-bottom: 8px; display: flex; gap: 8px; align-items: flex-start; }
+  .faq-q span { color: var(--purple); font-size: 16px; flex-shrink: 0; }
+  .faq-a { font-size: 13px; color: var(--muted); font-weight: 600; line-height: 1.6; }
+
+  /* CTA */
+  .cta-banner { max-width: 1100px; margin: 0 auto 64px; padding: 0 24px; }
+  .cta-inner {
+    background: linear-gradient(135deg, #a259ff 0%, #ff6b9d 100%);
+    border-radius: 24px; padding: 48px 36px;
+    text-align: center; color: #fff;
+    box-shadow: 0 12px 36px rgba(162,89,255,.3);
+  }
+  .cta-inner h3 { font-size: 26px; font-weight: 900; margin-bottom: 10px; }
+  .cta-inner p  { font-size: 15px; opacity: .9; margin-bottom: 26px; font-weight: 600; }
+  .cta-btn {
+    display: inline-block; padding: 13px 32px;
+    background: #fff; color: var(--purple);
+    border-radius: 50px; font-size: 14px; font-weight: 800;
+    cursor: pointer; border: none; font-family: inherit;
+    box-shadow: 0 4px 18px rgba(0,0,0,.15);
+  }
+
+  /* FOOTER */
+  footer {
+    background: linear-gradient(135deg, #2d1b4e, #4a2d78);
+    color: rgba(255,255,255,.7); text-align: center;
+    padding: 40px 24px 28px; font-size: 13px; font-weight: 600;
+  }
+  .f-icons { font-size: 22px; margin-bottom: 12px; letter-spacing: 4px; }
+  footer strong { color: #fff; }
+  .f-links { display: flex; justify-content: center; gap: 20px; margin: 14px 0; flex-wrap: wrap; }
+  .f-links a { color: rgba(255,255,255,.6); text-decoration: none; font-size: 13px; font-weight: 700; }
+  .f-links a:hover { color: #fff; }
+  .made-with {
+    display: block; margin-top: 18px; padding-top: 14px;
+    border-top: 1px solid rgba(255,255,255,.14);
+    font-size: 11.5px; color: rgba(255,255,255,.35);
+  }
+</style>
+</head>
+<body>
+<script>
+  window.wxOConfiguration = {
+    orchestrationID: "undefined",
+    hostURL: "https://au-syd.watson-orchestrate.cloud.ibm.com",
+    rootElementID: "root",
+    deploymentPlatform: "ibmcloud",
+    crn: "crn:v1:bluemix:public:watsonx-orchestrate:au-syd:a/be7247b4aebf4031a781f3b5e0687f81:d1bd60d3-ec60-400f-9683-1284fbba0dd0::",
+    chatOptions: {
+        agentId: "fae8e132-9aad-4220-9e7d-20f3c4aed088", 
+    }
+  };
+  setTimeout(function () {
+    const script = document.createElement('script');
+    script.src = `${window.wxOConfiguration.hostURL}/wxochat/wxoLoader.js?embed=true`;
+    script.addEventListener('load', function () {
+        wxoLoader.init();
+    });
+    document.head.appendChild(script);
+  }, 0);                     
+</script>
+
+<header>
+  <div class="hdr">
+    <div class="brand">
+      <div class="brand-icon">✨</div>
+      <div class="brand-text">
+        <h1>Social Spark ✨</h1>
+        <p>AI-Powered Social Media Assistant</p>
+      </div>
+    </div>
+    <nav>
+      <a href="#topics">Topics</a>
+      <a href="#how">How It Works</a>
+      <a href="#faq">FAQ</a>
+    </nav>
+  </div>
+</header>
+
+
+<section class="hero">
+  <div class="hero-pill">🤖 Powered by IBM watsonx</div>
+  <h2>Your <em>Social Media</em><br />Questions, Answered 💬</h2>
+  <p class="hero-sub">Ask anything about growing your brand, creating content, running ads, or engaging your audience — our AI agent has you covered instantly.</p>
+
+  <div class="platform-row">
+    <div class="plat plat-ig">📸 Instagram</div>
+    <div class="plat plat-tw">🐦 Twitter / X</div>
+    <div class="plat plat-fb">👍 Facebook</div>
+    <div class="plat plat-yt">▶️ YouTube</div>
+    <div class="plat plat-tk">🎵 TikTok</div>
+    <div class="plat plat-li">💼 LinkedIn</div>
+  </div>
+
+  <div class="stat-row">
+    <div class="stat-pill"><strong>6+</strong><span>Platforms</span></div>
+    <div class="stat-pill"><strong>24/7</strong><span>Available</span></div>
+    <div class="stat-pill"><strong>100+</strong><span>Topics</span></div>
+    <div class="stat-pill"><strong>AI</strong><span>Powered</span></div>
+  </div>
+</section>
+
+
+<div class="section" id="topics">
+  <div class="sec-head"><h3>What Can You <span>Ask?</span> 🌟</h3><div class="sec-line"></div></div>
+  <div class="topic-grid">
+    <div class="topic-card tc1">
+      <div class="topic-ico">📈</div>
+      <h4>Grow Your Audience</h4>
+      <p>Ask how to gain followers, boost your organic reach, and build a loyal community across any platform.</p>
+      <div class="topic-tags"><span class="ttag">Followers</span><span class="ttag">Reach</span><span class="ttag">Growth</span></div>
+    </div>
+    <div class="topic-card tc2">
+      <div class="topic-ico">✍️</div>
+      <h4>Content Creation</h4>
+      <p>Get advice on captions, post ideas, content calendars, formats, and what performs best per platform.</p>
+      <div class="topic-tags"><span class="ttag">Captions</span><span class="ttag">Ideas</span><span class="ttag">Calendar</span></div>
+    </div>
+    <div class="topic-card tc3">
+      <div class="topic-ico">💰</div>
+      <h4>Ads &amp; Promotions</h4>
+      <p>Learn about paid advertising, boosted posts, targeting options, budgets, and ROI optimisation.</p>
+      <div class="topic-tags"><span class="ttag">Paid Ads</span><span class="ttag">Budget</span><span class="ttag">ROI</span></div>
+    </div>
+    <div class="topic-card tc4">
+      <div class="topic-ico">💬</div>
+      <h4>Community Engagement</h4>
+      <p>Find strategies for replying to comments, handling DMs, managing negative feedback, and building trust.</p>
+      <div class="topic-tags"><span class="ttag">Comments</span><span class="ttag">DMs</span><span class="ttag">Trust</span></div>
+    </div>
+    <div class="topic-card tc5">
+      <div class="topic-ico">📊</div>
+      <h4>Analytics &amp; Insights</h4>
+      <p>Understand your metrics — impressions, engagement rate, click-through rate, and what to track and why.</p>
+      <div class="topic-tags"><span class="ttag">Metrics</span><span class="ttag">KPIs</span><span class="ttag">Reports</span></div>
+    </div>
+    <div class="topic-card tc6">
+      <div class="topic-ico">🤝</div>
+      <h4>Influencer &amp; Collabs</h4>
+      <p>Get guidance on finding collaborators, writing outreach messages, and structuring brand partnerships.</p>
+      <div class="topic-tags"><span class="ttag">Outreach</span><span class="ttag">Collab</span><span class="ttag">Influencer</span></div>
+    </div>
+  </div>
+</div>
+
+
+<div class="section" id="how">
+  <div class="sec-head"><h3>How It <span>Works</span> 🚀</h3><div class="sec-line"></div></div>
+  <div class="steps-row">
+    <div class="step-card">
+      <div class="step-num">1</div>
+      <div class="step-ico">💬</div>
+      <h4>Ask Your Question</h4>
+      <p>Type any social media question into the chat widget in the corner of the screen.</p>
+    </div>
+    <div class="step-card">
+      <div class="step-num">2</div>
+      <div class="step-ico">🤖</div>
+      <h4>AI Processes It</h4>
+      <p>Our IBM watsonx AI agent understands your query and searches its knowledge base instantly.</p>
+    </div>
+    <div class="step-card">
+      <div class="step-num">3</div>
+      <div class="step-ico">✨</div>
+      <h4>Get Smart Answers</h4>
+      <p>Receive clear, actionable advice tailored to your specific platform and goal.</p>
+    </div>
+    <div class="step-card">
+      <div class="step-num">4</div>
+      <div class="step-ico">📈</div>
+      <h4>Grow Your Brand</h4>
+      <p>Apply the insights and watch your social media presence grow with confidence.</p>
+    </div>
+  </div>
+</div>
+
+
+<div class="section" id="faq">
+  <div class="sec-head"><h3>Frequently Asked <span>Questions</span> 🙋</h3><div class="sec-line"></div></div>
+  <div class="faq-grid">
+    <div class="faq-card">
+      <div class="faq-q"><span>Q</span>What is the best time to post on Instagram?</div>
+      <div class="faq-a">Ask the agent! It provides platform-specific timing advice based on your audience type and timezone.</div>
+    </div>
+    <div class="faq-card">
+      <div class="faq-q"><span>Q</span>How do I increase my TikTok views?</div>
+      <div class="faq-a">The agent covers TikTok algorithm tips, trending audio advice, and hook-writing strategies to boost views.</div>
+    </div>
+    <div class="faq-card">
+      <div class="faq-q"><span>Q</span>How much should I spend on Facebook Ads?</div>
+      <div class="faq-a">Get budget guidance, campaign objective tips, and cost-per-click benchmarks directly from the agent.</div>
+    </div>
+    <div class="faq-card">
+      <div class="faq-q"><span>Q</span>How do I write a good Instagram bio?</div>
+      <div class="faq-a">The agent helps craft a compelling bio with the right keywords, call-to-action, and brand personality.</div>
+    </div>
+    <div class="faq-card">
+      <div class="faq-q"><span>Q</span>What hashtags should I use on LinkedIn?</div>
+      <div class="faq-a">Ask the agent for hashtag strategy across any platform — quantity, niche vs. broad mix, and placement tips.</div>
+    </div>
+    <div class="faq-card">
+      <div class="faq-q"><span>Q</span>How do I handle negative comments?</div>
+      <div class="faq-a">The agent provides community management scripts and frameworks for turning criticism into brand opportunities.</div>
+    </div>
+  </div>
+</div>
+
+
+<div class="cta-banner">
+  <div class="cta-inner">
+    <h3>Ready to Level Up Your Social Media? 🚀</h3>
+    <p>Click the chat bubble in the corner and start asking your questions right now — free and instant!</p>
+    <span class="cta-btn">Chat with the Agent ✨</span>
+  </div>
+</div>
+
+
+<footer>
+  <div class="f-icons">📸 🐦 👍 ▶️ 🎵 💼</div>
+  <p><strong>Social Spark ✨</strong> — Your AI-powered social media guide.</p>
+  <div class="f-links">
+    <a href="#topics">Topics</a>
+    <a href="#how">How It Works</a>
+    <a href="#faq">FAQ</a>
+  </div>
+  <p>Powered by <strong>IBM watsonx Orchestrate</strong></p>
+  <span class="made-with">Made with IBM Bob</span>
+</footer>
+
+<div id="root"></div>
+
+</body>
+</html>
